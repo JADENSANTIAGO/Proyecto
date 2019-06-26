@@ -1,0 +1,221 @@
+﻿@model CQASEntidades.VIewModel.AscqViewModelPaciente
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div id="content">
+
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- START ROW -->
+        <div class="row">
+            <!-- NEW COL START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget" id="wid-id-1" data-widget-editbutton="false" data-widget-custombutton="false">
+
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+                        <h2><strong>Ficha De Paciente</strong></h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+
+                        <div class="widget-body no-padding">
+
+                            <form asp-action="ActualizarFichaPaciente" id="checkout-form" class="smart-form">
+                                <input type="hidden" asp-for="Codigo" />
+                                <input type="hidden" asp-for="Estado" />
+                                <input type="hidden" asp-for="CodigoPersona" />
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Cédula Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input type="text" disabled="disabled" asp-for="CedulaPaciente" class="form-control" />
+                                                <span asp-validation-for="CedulaPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label>Nombres Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input type="text" disabled="disabled" asp-for="NombrePaciente" class="form-control" />
+                                                <span asp-validation-for="NombrePaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Apellidos Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input type="text" disabled="disabled" asp-for="ApellidoPaciente" class="form-control" />
+                                                <span asp-validation-for="ApellidoPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label>Fecha Nacimiento De Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input type="date" disabled="disabled" asp-for="FechaNacimientoPaciente" class="form-control" />
+                                                <span asp-validation-for="FechaNacimientoPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Género Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-users"></i>
+                                                <input type="text" disabled="disabled" asp-for="GeneroPaciente" class="form-control" />
+                                                <span asp-validation-for="GeneroPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label>Dirección Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-home"></i>
+                                                <input type="text" disabled="disabled" asp-for="DirecionPaciente" class="form-control" />
+                                                <span asp-validation-for="DirecionPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Estado Civil De Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input type="text" disabled="disabled" asp-for="EstadoCivilPaciente" class="form-control" />
+                                                <span asp-validation-for="EstadoCivilPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label>Nacionalidad De Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-flag"></i>
+                                                <input type="text" disabled="disabled" asp-for="NacionalidadPaciente" class="form-control" />
+                                                <span asp-validation-for="NacionalidadPaciente" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Edad De Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-user"></i>
+                                                <input type="text" disabled="disabled" asp-for="Edad" class="form-control" />
+                                                <span asp-validation-for="Edad" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label>Tipo Sangre De Paciente:</label>
+                                            <select asp-for="TipoSangrePaciente" asp- class="form-control" asp-items="ViewBag.TipoSangrePaciente">
+                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                            </select>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Etnia De Paciente:</label>
+                                            <select asp-for="EtniaPaciente" asp- class="form-control" asp-items="ViewBag.EtniaPaciente">
+                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                            </select>
+                                        </section>
+
+                                        <section class="col col-6">
+                                            <label>Sexo De Paciente:</label>
+                                            <select asp-for="SexoPaciente" asp- class="form-control" asp-items="ViewBag.SexoPaciente">
+                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                            </select>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label>Lugar De Nacimiento Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-picture-o"></i>
+                                                <input type="text" asp-for="LugarNacimiento" required class="form-control text-uppercase" />
+                                                <span asp-validation-for="LugarNacimiento" class="text-danger"></span>
+                                            </label>
+                                        </section>
+
+                                        <section class="col col-6">
+                                            <label>Lugar De Residencia Paciente:</label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-map-marker"></i>
+                                                <input type="text" asp-for="LugarResidencia" required class="form-control text-uppercase" />
+                                                <span asp-validation-for="LugarResidencia" class="text-danger"></span>
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+
+                                <footer>
+                                    <input type="submit" value="Actualizar" class="btn btn-primary btn-sm" />
+                                    <a asp-action="Index" class="btn btn-warning btn-sm">Cancelar</a>
+                                </footer>
+                            </form>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+
+            </article>
+
+        </div>
+        <!-- END ROW -->
+    </section>
+    <!-- end widget grid -->
+    <!-- Modal -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#genero').select2();
+            $('#TipoSangre').select2();
+        });
+    </script>
+    <script type="text/javascript">
+        function validar() {
+            var cad = document.getElementById("ced").value.trim();
+            var total = 0;
+            var longitud = cad.length;
+            var longcheck = longitud - 1;
+            if (cad !== "" && longitud === 10) {
+                for (i = 0; i < longcheck; i++) {
+                    if (i % 2 === 0) {
+                        var aux = cad.charAt(i) * 2;
+                        if (aux > 9) aux -= 9;
+                        total += aux;
+                    } else {
+                        total += parseInt(cad.charAt(i));
+                    }
+                }
+                total = total % 10 ? 10 - total % 10 : 0;
+                if (cad.charAt(longitud - 1) == total) {
+                } else {
+                    alert("Cedula Invalida!!");
+                }
+            }
+            else {
+                alert("Ingrese 10 digitos!!");
+            }
+        }
+    </script>
+}

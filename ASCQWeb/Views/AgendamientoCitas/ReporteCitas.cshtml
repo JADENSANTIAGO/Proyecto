@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewData["Title"] = "ReporteCitas";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    window.onload = function () {
+        $.ajax({
+            type: "POST",
+            url: "reporteCita",
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    };
+</script>
+
+
+<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    
+    window.onload = function () {
+
+      $.ajax({
+            type: "POST",
+          url: "reporteCita",
+          success: function (data) {
+              var contadorM = 0;
+              var contadorF = 0;
+
+              var contadorMe = 0;
+              var contadorI = 0;
+              var contadorA = 0;
+              var contadorB = 0;
+              
+
+
+                //FILTRO DE INFORMCACION UTILIZO UN FRAMEWOR QUE SE LLAMA CANVAS 
+
+              var numero = 0;
+              for (var a in data) {
+                  
+
+                  if (data[a].codigo !== numero) {
+                      numero = data[a].codigo;
+                      console.log(numero);
+                       if (data[a].genero == "MASCULINO") {
+                      contadorM++;
+                      } else if (data[a].genero == "FEMENINO"){
+                          contadorF++;
+                      }
+                  }
+              }
+               var numero2 = 0;
+              for (var a in data) {
+                  if (data[a].codigo !== numero2) {
+                      numero2 = data[a].codigo;
+                      if (data[a].etnia == "MESTIZO") {
+                          contadorMe++;
+                      } else if (data[a].etnia == "INDIGENA") {
+                          contadorI++;
+                      } else if (data[a].etnia == "AFROECUATORIANO") {
+                          contadorA++;
+                      } else if (data[a].etnia == "BLANCO") {
+                          contadorB++;
+                      }
+                  }
+
+              }
+
+
+              var chart = new CanvasJS.Chart("chartContainer",
+                {
+                  title:{
+                    text: "Porcentaje de citas medicas por Genero"
+                  },
+                  data: [
+                  {
+                   type: "doughnut",
+                   dataPoints: [
+                       { y: contadorM, indexLabel: "Masculino" },
+                       { y: contadorF, indexLabel: "Femenino" },
+                   ]
+                 }
+                 ]
+               });
+              var chart2 = new CanvasJS.Chart("chartContainer2",
+                {
+                  title:{
+                    text: "Porcentaje de citas medicas por Genero"
+                  },legend:{
+        verticalAlign: "bottom",
+        horizontalAlign: "center"
+      },
+                  data: [
+                  {
+                   dataPoints: [
+                       {x:1, y: contadorMe, indexLabel: "Mestizo" },
+                       {x:2, y: contadorI, indexLabel: "Indigena" },
+                       {x:3, y: contadorA, indexLabel: "Afroecuatoriano" },
+                       {x:4, y: contadorB, indexLabel: "Blanco" },
+                   ]
+                 }
+                 ]
+               });
+              chart.render();
+              chart2.render();
+            }
+        })
+    
+
+
+    
+  }
+</script>
+
+
+
+
+
+
+
+<div id="chartContainer" style="height: 300px; width:350px"></div>
+<div id="chartContainer2" style="height: 300px; width:350px"></div>
+
+

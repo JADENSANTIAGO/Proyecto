@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Newtonsoft.Json;
+@using CQASEntidades.VIewModel;
+<!-- Left panel : Navigation area -->
+<!-- Note: This width of the aside area can be adjusted through LESS variables -->
+<aside id="left-panel">
+    <!-- User info -->
+    @{ await Html.RenderPartialAsync("_CurrentUser"); }
+    <!-- end user info -->
+    <!-- NAVIGATION : This navigation is also responsive
+
+    To make this navigation dynamic please make sure to link the node
+    (the reference to the nav > ul) after page load. Or the navigation
+    will not initialize.
+    -->
+    @{
+
+        var usuario = HttpContextAccessor.HttpContext.Session.GetString("DatosUsuario");
+        try
+        {
+            if (usuario == null)
+            {
+                <script type="text/javascript">
+                   // window.location.href = "../Login/Index"
+                </script>
+            }
+            else
+            {
+                await Html.RenderPartialAsync("_Menu");
+            }
+
+        }
+        catch (Exception ex)
+        {
+            <script type="text/javascript">
+                window.location.href = "../Login/Index"
+            </script>
+        }
+
+
+    }
+</aside>
+<!-- END NAVIGATION -->

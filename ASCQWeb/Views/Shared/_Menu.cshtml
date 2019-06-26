@@ -1,0 +1,167 @@
+@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@using Newtonsoft.Json;
+@using CQASEntidades.VIewModel;
+
+<aside id="left-panel">
+    <!-- User info -->
+    <div class="login-info">
+        <span>
+            <!-- User image size is adjusted inside CSS, it should stay as it -->
+            @*<a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">*@
+            <a href="javascript:void(0);" id="show-shortcut">
+                <img src="~/img/avatars/sunny.png" alt="me" class="online" />
+                <span></span>
+                <i class="fa fa-angle-down"></i>
+            </a>
+        </span>
+    </div>
+    <!-- end user info -->
+    <!-- NAVIGATION : This navigation is also responsive-->
+    <nav>
+        <!--
+        NOTE: Notice the gaps after each icon usage <i></i>..
+        Please note that these links work a bit different than
+        traditional href="" links. See documentation for details.
+        -->
+        @{
+            AscqViewModelUsuario usuariologer = new AscqViewModelUsuario();
+            var usuario = HttpContextAccessor.HttpContext.Session.GetString("DatosUsuario");
+            if (usuario != null)
+            {
+                usuariologer = JsonConvert.DeserializeObject<AscqViewModelUsuario>(HttpContextAccessor.HttpContext.Session.GetString("DatosUsuario"));
+            }
+
+            if (!String.IsNullOrEmpty(usuariologer.Perfil) && usuariologer.Perfil == "Administrador")
+            {
+                @if (usuariologer.ListaMenu != null && usuariologer.ListaMenu.Count > 0)
+                {
+                    <ul>
+                        <li is-active-route asp-controller="Personas">
+
+                            <a href="#" title="Configuracion">
+                                <i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Administraci&oacute;n</span>
+                            </a>
+
+                            <ul>
+                                @foreach (var item in usuariologer.ListaMenu)
+                                {
+
+                                    <li is-active-route asp-controller=@item.Url asp-action="Index">
+                                        <a asp-controller=@item.Url asp-action="Index" title="Configuracion">
+                                            <span class="menu-item-parent">@item.Descripcion</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            }
+            if (!String.IsNullOrEmpty(usuariologer.Perfil) && usuariologer.Perfil == "Administrador" || usuariologer.Perfil == "Medico")
+            {
+                @if (usuariologer.ListaMenuMedico != null && usuariologer.ListaMenuMedico.Count > 0)
+                {
+                    <ul>
+                        <li is-active-route asp-controller="Personas">
+                            <a href="#" title="Configuracion">
+                                <i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">M&eacute;dico</span>
+                            </a>
+                            <ul>
+                                @foreach (var item in usuariologer.ListaMenuMedico)
+                                {
+
+                                    <li is-active-route asp-controller=@item.Url asp-action="Index">
+                                        <a asp-controller=@item.Url asp-action="Index" title="Configuracion">
+                                            <span class="menu-item-parent">@item.Descripcion</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            }
+            if (!String.IsNullOrEmpty(usuariologer.Perfil) && usuariologer.Perfil == "Administrador" || usuariologer.Perfil == "Paciente" || usuariologer.Perfil == "Medico")
+            {
+                @if (usuariologer.ListaMenuPaciente != null && usuariologer.ListaMenuPaciente.Count > 0)
+                {
+                    <ul>
+                        <li is-active-route asp-controller="Personas">
+                            <a href="#" title="Configuracion">
+                                <i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Paciente</span>
+                            </a>
+                            <ul>
+                                @foreach (var item in usuariologer.ListaMenuPaciente)
+                                {
+
+                                    <li is-active-route asp-controller=@item.Url asp-action="Index">
+                                        <a asp-controller=@item.Url asp-action="Index" title="Configuracion">
+                                            <span class="menu-item-parent">@item.Descripcion</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            }
+            if (!String.IsNullOrEmpty(usuariologer.Perfil) && usuariologer.Perfil == "Administrador")
+            {
+                @if (usuariologer.ListaMenuReportes != null && usuariologer.ListaMenuReportes.Count > 0)
+                {
+                    <ul>
+                        <li is-active-route asp-controller="Personas">
+                            <a href="#" title="Configuracion">
+                                <i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Reportes</span>
+                            </a>
+                            <ul>
+                                @foreach (var item in usuariologer.ListaMenuReportes)
+                                {
+
+                                    <li is-active-route asp-controller=@item.Url asp-action="ReporteCitas">
+                                        <a asp-controller=@item.Url asp-action="ReporteCitas" title="Configuracion">
+                                            <span class="menu-item-parent">@item.Descripcion</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            }
+            if (!String.IsNullOrEmpty(usuariologer.Perfil) && usuariologer.Perfil == "Administrador" || usuariologer.Perfil == "Medico" || usuariologer.Perfil == "Paciente")
+            {
+
+                <ul>
+                    <li is-active-route asp-controller="Personas">
+                        <a href="#" title="Configuracion">
+                            <i class="fa fa-lg fa-fw fa-pencil-square-o"></i> <span class="menu-item-parent">Seguridad</span>
+                        </a>
+                        <ul>
+                            <li is-active-route asp-controller="Usuarios" asp-action="CambiarContrasena">
+                                <a asp-controller=Usuarios asp-action="CambiarContrasena" title="Configuracion">
+                                    <span class="menu-item-parent">Cambiar Contrasena</span>
+                                </a>
+                            </li>
+                            @if (usuariologer.ListaMenuSeguridad != null && usuariologer.ListaMenuSeguridad.Count > 0)
+                            {
+                                foreach (var item in usuariologer.ListaMenuSeguridad)
+                                {
+
+                                    <li is-active-route asp-controller=@item.Url asp-action="Index">
+                                        <a asp-controller=@item.Url asp-action="Index" title="Configuracion">
+                                            <span class="menu-item-parent">@item.Descripcion</span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            }
+        }
+
+    </nav>
+</aside>
+<!-- END NAVIGATION -->
