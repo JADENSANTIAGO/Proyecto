@@ -29,8 +29,6 @@ namespace ASCQWeb.Controllers
             }).ToList(), "Codigo", "Descripcion");
 
         }
-
-
         public IActionResult Index()
         {
             AscqViewModelUsuario usuariologer = new AscqViewModelUsuario();

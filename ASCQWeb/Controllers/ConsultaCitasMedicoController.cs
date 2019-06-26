@@ -144,17 +144,26 @@ namespace CQASWeb.Controllers
             {
                 CqasHistoriaClinica clinica = new CqasHistoriaClinica();
                 clinica = _context.CqasHistoriaClinica.Where(x => x.CodigoCita == Convert.ToInt32(cqasHistoriaClinica.CodigoCita)).FirstOrDefault();
+                var cita = _context.CqasCita.Where(x => x.Codigo == Convert.ToInt32(cqasHistoriaClinica.CodigoCita)).FirstOrDefault();
                 if (clinica != null)
                 {
                     clinica.Descripcion = cqasHistoriaClinica.Descripcion;
                     clinica.Reseta = cqasHistoriaClinica.Reseta;
                     _context.CqasHistoriaClinica.Update(clinica);
                     await _context.SaveChangesAsync();
+                    //cita
+                    cita.Estado = "E";
+                    _context.CqasCita.Update(cita);                 
+                    await _context.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
                 else
                 {
                     _context.CqasHistoriaClinica.Add(cqasHistoriaClinica);
+                    await _context.SaveChangesAsync();
+                    //cita
+                    cita.Estado = "E";
+                    _context.CqasCita.Update(cita);
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Index");
                 }
