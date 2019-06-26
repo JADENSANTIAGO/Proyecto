@@ -24,18 +24,19 @@ namespace ASCQWeb.Controllers
             ViewData["Consultorio"] = new SelectList(_context.CqasConsultorio.ToList(), "Codigo", "Descripcion");
 
         }
+        private void InicializarMensaje(string mensaje)
+        {
+            if (mensaje == null)
+            {
+                mensaje = "";
+            }
+            ViewData["Error"] = mensaje;
+        }
         public IActionResult Index()
         {
             List<AscqViewModelMedico> datosmedico = new List<AscqViewModelMedico>();
             try
             {
-                //var Especialidad = _context.CqasAsignacionConsultorio.Select(x => new AscqViewModelMedico
-                //{
-                //    Codigo = x.Codigo,
-                //    CodigoMedico = x.CodigoMedicoEspecialidadNavigation.CodigoMedico,
-                //    NombreMedico = string.Format("{0} {1}", x.CodigoMedicoEspecialidadNavigation.CodigoMedicoNavigation.CodigoPersonaNavigation.Nombre, x.CodigoMedicoEspecialidadNavigation.CodigoMedicoNavigation.CodigoPersonaNavigation.Apellido),
-                //    NombreEspecialidad = x.CodigoMedicoEspecialidadNavigation.CodigoEspecialidadNavigation.Descripcion
-                //}).ToList();
 
                 var Especialidad = _context.CqasMedicoEspecialidad.Select(x => new AscqViewModelMedico
                 {
@@ -71,10 +72,11 @@ namespace ASCQWeb.Controllers
                 return BadRequest();
             }
         }
-        public IActionResult Consultorios(string id)
+        public IActionResult Consultorios(string id,string mensaje)
         {
             try
             {
+                InicializarMensaje(mensaje);
                 AscqViewModelMedico Especialidad = new AscqViewModelMedico();
                 Combox();
                 Especialidad = _context.CqasMedicoEspecialidad.Where(s => s.Codigo == Convert.ToInt32(id))
@@ -114,13 +116,14 @@ namespace ASCQWeb.Controllers
                     nuevomedicoespecialidad.Estado = "A";
                     _context.CqasAsignacionConsultorio.Add(nuevomedicoespecialidad);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction("Consultorios", new { id = ascqViewModelMedico.Codigo, mensaje = "Asignado Exitosamente" });
                 }
-                return RedirectToAction("Consultorios", new { id = ascqViewModelMedico.Codigo });
+                return RedirectToAction("Consultorios", new { id = ascqViewModelMedico.Codigo,mensaje = "Consultorio ya asignado" });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Combox();
-                return BadRequest();
+                return RedirectToAction("Consultorios", new { id = ascqViewModelMedico.Codigo });
             }
         }
         public async Task<IActionResult> EliminarConsultorio(string id)

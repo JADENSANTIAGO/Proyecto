@@ -1,0 +1,144 @@
+﻿@model CQASEntidades.VIewModel.AscqViewModelMedico
+@{
+}
+<div id="content">
+    <div class="col col-10">
+            @if (@ViewData["Error"].ToString() != "")
+
+            {
+
+                <div class="col-lg-12">
+                    <div class="alert alert-block alert-dismissable">
+                        <a class="close" data-dismiss="alert" href="#"><p>X</p></a>
+                        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+                        <p>
+                            <span class="text-danger"><strong><bold> @ViewData["Error"]</bold></strong></span>
+                        </p>
+                    </div>
+                </div>
+
+            }
+        </div>
+
+    <!-- widget grid -->
+    <section id="" class="">
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-darken" id="wid-id-0" data-widget-editbutton="false">
+
+                    <header id="table">
+                        <span class="widget-icon"> <i class="fa fa-calendar"></i> </span>
+                        <h2><strong>Agendamiento de Citas Médicas</strong></h2>
+                    </header>
+                    <!-- widget div-->
+                    <div>
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <form asp-action="Index" id="checkout-form" class="smart-form">
+                                @*<input type="hidden" asp-for="Codigo" />*@
+                                <input type="hidden" asp-for="Cedula" />
+                                <input type="hidden" asp-for="NombrePersona" />
+                                <input type="hidden" asp-for="CodigoConsultorio" />
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label><strong>Especialidad:</strong></label>
+                                            <select id="Especialidad" asp-for="CodigoEspecialista" asp- class="form-control" asp-items="ViewBag.Especialidad">
+                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                            </select>
+                                        </section>
+                                        <section class="col col-6">
+                                            <label><strong>Paciente:</strong></label>
+                                            <select id="Paciente" asp-for="Codigo" asp- class="form-control" asp-items="ViewBag.Paciente">
+                                                <option value="0" selected="selected" disabled="">Seleccione</option>
+                                            </select>
+                                        </section>                                       
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-6">
+                                            <label><strong>Fecha:</strong></label>
+                                            <label class="input">
+                                                <i class="icon-prepend fa fa-calendar"></i>
+                                                <input type="date" required asp-for="Fecha" class="form-control" />
+
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <footer>
+                                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                                </footer>
+                            </form>
+                        </div>
+                        <div class="widget-body no-padding">
+                            <table id="datatable_tabletools" class="table table-striped table-bordered table-hover" style="width: 100%;">
+                                <thead>
+                                    <tr>
+
+                                        <th data-class="expand">
+                                            Médico
+                                        </th>
+                                        <th data-class="expand">
+                                            Especialidad
+                                        </th>                                        
+                                        <th data-hide="phone">
+                                            Horario
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null)
+                                    {
+                                        @if (Model.ListaMedicos != null)
+                                        {
+                                            @foreach (var item in Model.ListaMedicos)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.NombreMedico)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.NombreEspecialidad)
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("Fijar Hora", "TurnosDisponibles", new { id = item.Codigo })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        }
+
+</table>
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>
+<!-- END MAIN CONTENT -->
+
+@section Scripts {
+    <script src='~/js/datatables/init.js'></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Especialidad').select2();
+            $('#Paciente').select2();
+        });
+    </script>
+}
+

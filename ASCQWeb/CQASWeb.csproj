@@ -17,6 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\AgendamientoCitasMedico\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\AgendamientoCitasMedico\TurnosDisponibles.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\AsignacionPerfil\Acceso.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
